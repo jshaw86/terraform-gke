@@ -93,14 +93,11 @@ kubectl cluster-info
 
 If the cluster is working you should be able to see a result similar to the ff:
 ```
-ctaguinod@ctaguinod-terraform:~/kubernetes-demos/terraform-gke/tf$ kubectl cluster-info
 Kubernetes master is running at https://35.185.180.68
 GLBCDefaultBackend is running at https://35.185.180.68/api/v1/namespaces/kube-system/services/default-http-backend/proxy
 Heapster is running at https://35.185.180.68/api/v1/namespaces/kube-system/services/heapster/proxy
 KubeDNS is running at https://35.185.180.68/api/v1/namespaces/kube-system/services/kube-dns/proxy
 kubernetes-dashboard is running at https://35.185.180.68/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy
-To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
-ctaguinod@ctaguinod-terraform:~/kubernetes-demos/terraform-gke/tf$
 ```
 
 7. Run Sample App.
