@@ -1,0 +1,10 @@
+.DS_Store
+*.terraform*
+*terraform.tfstate*
+*.json*
+*.zip
+*.tar
+*.tar.gz
+terraform
+disabled
+tmp
