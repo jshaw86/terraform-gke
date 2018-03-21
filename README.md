@@ -84,9 +84,9 @@ cd tf/
 gcloud container clusters list
 
 ```
-Configure kubectl credentials
- 
-``
+
+Configure kubectl credentials 
+```
 gcloud container clusters get-credentials $(GKE_CLUSTER_NAME) --zone $(ZONE)`
 kubectl cluster-info
 ```
