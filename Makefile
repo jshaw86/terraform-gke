@@ -70,8 +70,8 @@ create-tf-service-account:
 	@gcloud services enable compute.googleapis.com
 	@gcloud services enable container.googleapis.com
 	@gcloud iam service-accounts create $(TF_ADMIN_USER) --project $(TF_PROJECT_ID) --display-name "Terraform admin service account"
-	@gcloud iam service-accounts keys create $(TF_CREDENTIAL) --iam-account $(TF_ADMIN_USER)@$(TF_PROJECT_ID).iam.gserviceaccount.com
 	@gcloud projects add-iam-policy-binding $(TF_PROJECT_ID) --member serviceAccount:$(TF_ADMIN_USER)@$(TF_PROJECT_ID).iam.gserviceaccount.com --role roles/owner
+	@gcloud iam service-accounts keys create $(TF_CREDENTIAL) --iam-account $(TF_ADMIN_USER)@$(TF_PROJECT_ID).iam.gserviceaccount.com
 
 .PHONY: install-tf
 install-tf:
@@ -80,7 +80,7 @@ install-tf:
 
 .PHONY: kubectl-get-creds 
 kubectl-get-creds:
-	@gcloud container clusters get-credentials $(GKE_CLUSTER_NAME) --zone $(ZONE)
+	@gcloud container clusters get-credentials $(GKE_CLUSTER_NAME) --zone $(ZONE) --project $(TF_PROJECT_ID)
 
 .PHONY: delete-service-account
 delete-service-account:
@@ -90,4 +90,13 @@ delete-service-account:
 .PHONY: delete-tf
 delete-tf:
 	@rm -f bin/terraform
-	@rm -f /usr/local/bin/terraform
+	@sudo rm -f /usr/local/bin/terraform
+	@cd terraform; terraform destroy --force
+
+.PHONY: delete-project
+delete-project:
+	@rm -f bin/terraform
+	@sudo rm -f /usr/local/bin/terraform
+	@gcloud iam service-accounts delete $(TF_ADMIN_USER)@$(TF_PROJECT_ID).iam.gserviceaccount.com --project $(TF_PROJECT_ID)
+	@rm -f $(TF_CREDENTIAL)
+	@gcloud projects delete ${TF_PROJECT_ID}

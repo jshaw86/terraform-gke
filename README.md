@@ -86,4 +86,5 @@ To Delete service account and credential Run: `make delete-service-account`
 
 To Delete Terraform Run: `make delete-tf`
 
+To Delete Project Run: `make delete-project`
 
