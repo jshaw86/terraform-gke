@@ -66,4 +66,3 @@ variable machine_type {
 variable gke_service_account {
   description = "GKE Service Account Name"
 }
-

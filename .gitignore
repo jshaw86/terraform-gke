@@ -5,6 +5,7 @@
 *.zip
 *.tar
 *.tar.gz
-terraform
 disabled
+bin
 tmp
+*.swp

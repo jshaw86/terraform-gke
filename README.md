@@ -1,21 +1,21 @@
 # terraform-gke
-Quick Tutorial Provisioning Google Kubernetes Engine using [Terraform](https://www.terraform.io/docs/providers/google/index.html)
+Quick guide to provision [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/) using [Terraform](https://www.terraform.io/docs/providers/google/index.html)
 
 ## Assumptions -  this tutorial assumes your already have the following:
 1. A [Google Cloud Platform](https://cloud.google.com/) account.
-2. Created a Project and associated to Billing. 
-3. You are familiar and going to use [Google Cloud Shell](https://cloud.google.com/shell/).
-4. or You have [Google Cloud SDK](https://cloud.google.com/sdk/docs/) Installed and Configured on your machine.
+2. [Google Cloud Shell](https://cloud.google.com/shell/) will be used.
  
 ## Setup
-1. Launch GCP Console, Select Project and Start Cloud Shell 
+1. Start Cloud Shell 
+
 2. Clone this repo
 ```
 git clone https://github.com/ctaguinod/terraform-gke
 cd terraform-gke
 ```
 
-3. Configure variables in Makefile , defaults are the following:
+3. Modify the variables configured in the file `Makefile`.
+Default variables are as follows: 
 ```
 REGION=asia-southeast1
 ZONE=asia-southeast1-a
@@ -23,36 +23,14 @@ TF_ADMIN_USER=terraform-admin
 TF_PROJECT_ID=$(USER)-terraform
 ```
 
-4. Enable apis, create terraform service account, service account json credential in ~/.gcp/ and download terraform in the current directory
+4. Create New Project: Run: `make create-project` , skip this step if you already have a project created and associatd to billing.
 
-Run 
-```
-make install
-```
+5. Create Service Account: Run: `make create-tf-service-account`
 
-The command above will run the following:
+6. Install Terraform binary: Run: `make install-tf` , skip this step if you already have terraform installed.
 
-```
-gcloud services enable iam.googleapis.com
-gcloud services enable cloudresourcemanager.googleapis.com
-gcloud services enable compute.googleapis.com
-gcloud services enable container.googleapis.com
-gcloud iam service-accounts create $(TF_ADMIN_USER) --project $(TF_PROJECT_ID) --display-name "Terraform admin service account"
-gcloud iam service-accounts keys create $(TF_CREDENTIAL) --iam-account $(TF_ADMIN_USER)@$(TF_PROJECT_ID).iam.gserviceaccount.com
-gcloud projects add-iam-policy-binding $(TF_PROJECT_ID) --member serviceAccount:$(TF_ADMIN_USER)@$(TF_PROJECT_ID).iam.gserviceaccount.com --role roles/owner
-wget https://releases.hashicorp.com/terraform/0.11.4/terraform_0.11.4_linux_amd64.zip
-unzip terraform_0.11.4_linux_amd64.zip
-```
-
-5. Configure the variables and run terraform: 
-
-Terraform configs:
-* tf/iam.tf - Creates a service account with the roles storage.admin, logging.logWriter, monitoring.metricWriter and container.admin
-* tf/network.tf - Creates a custom network with 3 subnetworks: cluster-net for the GKE Nodes, pod-net for Pods and svc-net for k8s services.
-* tf/gke.tf - Creates a GKE cluster with the custom service acccount, custom network, ip aliases enabled, multi zone and autoscaling enabled.
-* tf/terraform.tfvars - contains variables that needs to be configured:
-
-Configure the variables in terraform.tfvars, defaults are as follows: 
+7. Modify the variables in the file `terraform/terraform.tfvars`
+Default variables are as follows:
 ```
 gke_cluster_name = "demo"
 project = "ctaguinod-terraform"
@@ -71,26 +49,16 @@ pod-net = "10.0.0.0/14"
 svc-net = "10.4.4.0/22"
 ```
 
-Run the following to provision the cluster:
-```
-cd tf/
-../terraform init
-../terraform plan
-../terraform apply
-```
+8. Run Terraform Commands inside terraform/ directory to provision the Infrastructure:
+`cd terraform/`
+To Initialize Terraform Run: `terraform init`
+To Generate execution plan for Terraform Run: `terraform plan`
+To Build / Execute the Terraform plan Run: `terraform apply`
 
-6. Verify the cluster is running:
-```
-gcloud container clusters list
+9. Configure kubectl credential, Run: `make kubectl-get-creds`
 
-```
-
-Configure kubectl credentials 
-```
-gcloud container clusters get-credentials $(GKE_CLUSTER_NAME) --zone $(ZONE)`
-kubectl cluster-info
-```
-
+10. Verify if the cluster works, Run: `kubectl cluster-info`
+If kubectl can connect to the cluster you can now start deploying apps to your GKE Cluster.
 If the cluster is working you should be able to see a result similar to the ff:
 ```
 Kubernetes master is running at https://35.185.180.68
@@ -100,23 +68,12 @@ KubeDNS is running at https://35.185.180.68/api/v1/namespaces/kube-system/servic
 kubernetes-dashboard is running at https://35.185.180.68/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy
 ```
 
-7. Run Sample App.
+11. Clean Up.
 
-8. Clean Up.
+To Destroy Terraform-managed infrastructure Run: `terraform destroy --force`
 
-Destroy all resource provisioned by Terraform.
-```
-../terraform destroy
-```
+To Delete service account and credential Run: `make delete-service-account`
 
-Delete service account and credential
-```
-make delete-service-account
-```
-
-Delete Terraform
-```
-make delete-terraform
-```
+To Delete Terraform Run: `make delete-tf
 
 
