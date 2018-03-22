@@ -17,6 +17,7 @@ cd terraform-gke
 3. Modify the variables configured in the file `Makefile`.
 
 Default variables are as follows: 
+
 ```
 REGION=asia-southeast1
 ZONE=asia-southeast1-a
@@ -33,6 +34,7 @@ TF_PROJECT_ID=$(USER)-terraform
 7. Modify the variables in the file `terraform/terraform.tfvars`
 
 Default variables are as follows:
+
 ```
 gke_cluster_name = "demo"
 project = "ctaguinod-terraform"
@@ -55,15 +57,15 @@ svc-net = "10.4.4.0/22"
 
 `cd terraform/`
 
-To Initialize Terraform Run: `terraform init`
+To Initialize Terraform Run: `terraform init`.
 
-To Generate execution plan for Terraform Run: `terraform plan`
+To Generate execution plan for Terraform Run: `terraform plan`.
 
-To Build / Execute the Terraform plan Run: `terraform apply`
+To Build / Execute the Terraform plan Run: `terraform apply`.
 
-9. Configure kubectl credential, Run: `make kubectl-get-creds`
+9. Configure kubectl credential, Run: `make kubectl-get-creds`.
 
-10. Verify if the cluster works, Run: `kubectl cluster-info`
+10. Verify if the cluster works, Run: `kubectl cluster-info`.
 
 If kubectl can connect to the cluster you can now start deploying apps to your GKE Cluster.
 
@@ -82,6 +84,6 @@ To Destroy Terraform-managed infrastructure Run: `terraform destroy --force`
 
 To Delete service account and credential Run: `make delete-service-account`
 
-To Delete Terraform Run: `make delete-tf
+To Delete Terraform Run: `make delete-tf`
 
 
