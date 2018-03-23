@@ -9,7 +9,7 @@ This is a quick guide to provision [Google Kubernetes Engine](https://cloud.goog
 3. Familiar with [Terraform](https://www.terraform.io/), here's a good [Introduction to Terraform](https://blog.gruntwork.io/an-introduction-to-terraform-f17df9c6d180) tutorial.
 4. [gcloud SDK](https://cloud.google.com/sdk/) configured or you can use [Google Cloud Shell](https://cloud.google.com/shell/).
 
-## Usage
+### Usage
 
 **1. Clone this repo.**
 
