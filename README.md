@@ -1,14 +1,20 @@
 # terraform-gke
 Quick guide to provision [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/) using [Terraform](https://www.terraform.io/docs/providers/google/index.html)
 
-## Assumptions -  this tutorial assumes your already have the following:
-1. A [Google Cloud Platform](https://cloud.google.com/) account.
-2. [Google Cloud Shell](https://cloud.google.com/shell/) will be used.
+## Before you begin.
+
+This guide assumes that:
+
+1. You are already familiar and have a [Google Cloud Platform](https://cloud.google.com/) account.
+2. You are already familiar with [Kubernetes](https://kubernetes.io/). If you are looking for a basic tutorial, here's a good [Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/) tutorial. 
+3. You are already familiar with [Terraform](https://www.terraform.io/). If you are looking for a detailed tutorial, here's a good [Introduction to Terraform](https://blog.gruntwork.io/an-introduction-to-terraform-f17df9c6d180) tutorial.
+4. [Google Cloud Shell](https://cloud.google.com/shell/) will be used.
  
 ## Setup
-1. Start Cloud Shell 
 
-2. Clone this repo
+1. Start Cloud Shell. 
+
+2. Clone this repo.
 ```
 git clone https://github.com/ctaguinod/terraform-gke
 cd terraform-gke
@@ -53,7 +59,7 @@ pod-net = "10.0.0.0/14"
 svc-net = "10.4.4.0/22"
 ```
 
-8. Run Terraform Commands inside terraform/ directory to provision the Infrastructure:
+8. Run Terraform Commands inside `terraform/` directory to provision the infrastructure:
 
 `cd terraform/`
 
@@ -81,6 +87,8 @@ kubernetes-dashboard is running at https://35.185.180.68/api/v1/namespaces/kube-
 11. Clean Up.
 
 To Destroy Terraform-managed infrastructure Run: `terraform destroy --force`
+
+`cd ..`
 
 To Delete service account and credential Run: `make delete-service-account`
 
