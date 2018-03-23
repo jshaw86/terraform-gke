@@ -84,7 +84,7 @@ kubernetes-dashboard is running at https://35.185.180.68/api/v1/namespaces/kube-
 
 11. You can now start deploying apps to your GKE Cluster.
 
-To deploy basic apps you can follow the Kubernetes (https://kubernetes.io/docs/tutorials/kubernetes-basics/) guide.
+To deploy basic apps you can follow the [Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/) tutorial.
 
 If you want to try out [Istio](https://istio.io/) you can follow my Istio quick demo guide here https://kubernetes.io/docs/tutorials/kubernetes-basics/
 
