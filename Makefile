@@ -89,13 +89,13 @@ delete-service-account:
 
 .PHONY: delete-tf
 delete-tf:
-	@rm -f bin/terraform
+	@rm -rf bin/
 	@sudo rm -f /usr/local/bin/terraform
 	@cd terraform; terraform destroy --force
 
 .PHONY: delete-project
 delete-project:
-	@rm -f bin/terraform
+	@rm -rf bin/
 	@sudo rm -f /usr/local/bin/terraform
 	@gcloud iam service-accounts delete $(TF_ADMIN_USER)@$(TF_PROJECT_ID).iam.gserviceaccount.com --project $(TF_PROJECT_ID)
 	@rm -f $(TF_CREDENTIAL)
