@@ -16,7 +16,7 @@ TF_CREDENTIAL=~/.gcp/$(TF_ADMIN_USER).json
 # Change this to your correct Project ID
 TF_PROJECT_ID=$(USER)-terraform
 # Terraform Installer:
-TF_INSTALLER=https://releases.hashicorp.com/terraform/0.11.4/terraform_0.11.4_linux_amd64.zip
+TF_INSTALLER=https://releases.hashicorp.com/terraform/0.11.5/terraform_0.11.5_linux_amd64.zip
 
 export PATH := $(PWD)/bin:$(PATH)
 
@@ -91,7 +91,6 @@ delete-service-account:
 delete-tf:
 	@rm -rf bin/
 	@sudo rm -f /usr/local/bin/terraform
-	@cd terraform; terraform destroy --force
 
 .PHONY: delete-project
 delete-project:
