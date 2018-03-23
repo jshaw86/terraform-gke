@@ -88,7 +88,7 @@ kubernetes-dashboard is running at https://35.185.180.68/api/v1/namespaces/kube-
 
 To deploy basic apps you can follow the [Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/) tutorial.
 
-If you want to try out [Istio](https://istio.io/) you can follow my Istio quick demo guide here https://kubernetes.io/docs/tutorials/kubernetes-basics/
+If you want to try out [Istio](https://istio.io/) you can follow my Istio quick demo guide here https://github.com/ctaguinod/istio-demo
 
 
 12. Clean Up.
