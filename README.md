@@ -5,7 +5,7 @@ Quick guide to provision [Google Kubernetes Engine](https://cloud.google.com/kub
 
 This guide assumes that:
 
-1. You are already familiar and have a [Google Cloud Platform](https://cloud.google.com/) account.
+1. You are already familiar with and have a [Google Cloud Platform](https://cloud.google.com/) account.
 2. You are already familiar with [Kubernetes](https://kubernetes.io/). If you are looking for a basic tutorial, here's a good [Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/) tutorial. 
 3. You are already familiar with [Terraform](https://www.terraform.io/). If you are looking for a detailed tutorial, here's a good [Introduction to Terraform](https://blog.gruntwork.io/an-introduction-to-terraform-f17df9c6d180) tutorial.
 4. [Google Cloud Shell](https://cloud.google.com/shell/) will be used.
@@ -33,7 +33,7 @@ TF_PROJECT_ID=$(USER)-terraform
 
 4. Create New Project: Run: `make create-project` , skip this step if you already have a project created and associated to billing.
 
-5. Create Service Account: Run: `make create-tf-service-account`
+5. Create Service Account: Run: `make create-tf-service-account`.
 
 6. Install Terraform binary: Run: `make install-tf` , skip this step if you already have terraform installed.
 
@@ -73,9 +73,7 @@ To Build / Execute the Terraform plan Run: `terraform apply`.
 
 10. Verify if the cluster works, Run: `kubectl cluster-info`.
 
-If kubectl can connect to the cluster you can now start deploying apps to your GKE Cluster.
-
-If the cluster is working you should be able to see a result similar to the ff:
+If kubectl can connect to the cluster and If the cluster is working you should be able to see a result similar to the ff:
 ```
 Kubernetes master is running at https://35.185.180.68
 GLBCDefaultBackend is running at https://35.185.180.68/api/v1/namespaces/kube-system/services/default-http-backend/proxy
@@ -84,7 +82,14 @@ KubeDNS is running at https://35.185.180.68/api/v1/namespaces/kube-system/servic
 kubernetes-dashboard is running at https://35.185.180.68/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy
 ```
 
-11. Clean Up.
+11. You can now start deploying apps to your GKE Cluster.
+
+To deploy basic apps you can follow the Kubernetes (https://kubernetes.io/docs/tutorials/kubernetes-basics/) guide.
+
+If you want to try out [Istio](https://istio.io/) you can follow my Istio quick demo guide here https://kubernetes.io/docs/tutorials/kubernetes-basics/
+
+
+12. Clean Up.
 
 To Destroy Terraform-managed infrastructure Run: `terraform destroy --force`
 
