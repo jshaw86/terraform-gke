@@ -1,45 +1,66 @@
-# terraform-gke
-Quick guide to provision [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/) using [Terraform](https://www.terraform.io/docs/providers/google/index.html)
+## terraform-gke
 
-## Before you begin.
+This is a quick guide to provision [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/) using [Terraform](https://www.terraform.io/docs/providers/google/index.html)
 
-This guide assumes that:
+### Before you begin.
 
-1. You are already familiar and have a [Google Cloud Platform](https://cloud.google.com/) account.
-2. You are already familiar with [Kubernetes](https://kubernetes.io/). If you are looking for a basic tutorial, here's a good [Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/) tutorial. 
-3. You are already familiar with [Terraform](https://www.terraform.io/). If you are looking for a detailed tutorial, here's a good [Introduction to Terraform](https://blog.gruntwork.io/an-introduction-to-terraform-f17df9c6d180) tutorial.
-4. [Google Cloud Shell](https://cloud.google.com/shell/) will be used.
- 
-## Setup
+1. You'll need a [Google Cloud Platform](https://cloud.google.com/) account. 
+2. Familiar with with [Kubernetes](https://kubernetes.io/), here's a good [Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/) tutorial.
+3. Familiar with [Terraform](https://www.terraform.io/), here's a good [Introduction to Terraform](https://blog.gruntwork.io/an-introduction-to-terraform-f17df9c6d180) tutorial.
+4. [gcloud SDK](https://cloud.google.com/sdk/) configured or you can use [Google Cloud Shell](https://cloud.google.com/shell/).
 
-1. Start Cloud Shell. 
+### Usage
 
-2. Clone this repo.
+**1. Clone this repo.**
+
 ```
 git clone https://github.com/ctaguinod/terraform-gke
 cd terraform-gke
 ```
 
-3. Modify the variables configured in the file `Makefile`.
+**2. Modify the variables in the file `Makefile`.**
 
-Default variables are as follows: 
+Default variables: 
 
 ```
 REGION=asia-southeast1
 ZONE=asia-southeast1-a
+GCP_BILLING_ACCOUNT=0X0X0X-0X0X0X-0X0X0X
+GKE_CLUSTER_NAME=demo
 TF_ADMIN_USER=terraform-admin
+TF_CREDENTIAL=~/.gcp/$(TF_ADMIN_USER).json
 TF_PROJECT_ID=$(USER)-terraform
+TF_INSTALLER=https://releases.hashicorp.com/terraform/0.11.5/terraform_0.11.5_linux_amd64.zip
 ```
 
-4. Create New Project: Run: `make create-project` , skip this step if you already have a project created and associated to billing.
+**3. Create New Project** - *you can skip this step if you already have a project and associated to billing.*
 
-5. Create Service Account: Run: `make create-tf-service-account`
+```
+make create-project
+```
 
-6. Install Terraform binary: Run: `make install-tf` , skip this step if you already have terraform installed.
+This step creates a project named `${TF_PROJECT_ID}` and associates to billing account `GCP_BILLING_ACCOUNT`
 
-7. Modify the variables in the file `terraform/terraform.tfvars`
 
-Default variables are as follows:
+**4. Create a Service Account** 
+
+```
+make create-tf-service-account
+```
+
+This step creates a service account $(TF_ADMIN_USER) and adds a project iam policy binding with roles/owner and creates a service account key in $(TF_CREDENTIAL)
+
+**5. Install Terraform** - *you can skip this step if you already have terraform installed.*
+
+```
+make install-tf 
+```
+
+This step downloads the terraform binary in bin/ and /usr/local/bin/
+
+**6. Modify the variables in the file `terraform/terraform.tfvars`**
+
+Default variables:
 
 ```
 gke_cluster_name = "demo"
@@ -59,23 +80,32 @@ pod-net = "10.0.0.0/14"
 svc-net = "10.4.4.0/22"
 ```
 
-8. Run Terraform Commands inside `terraform/` directory to provision the infrastructure:
+**7. Run Terraform Commands inside `terraform/` directory**
 
 `cd terraform/`
 
-To Initialize Terraform Run: `terraform init`.
+`terraform init` - This will initialize terraform.
 
-To Generate execution plan for Terraform Run: `terraform plan`.
+`terraform plan` - This will generate execution plan.
 
-To Build / Execute the Terraform plan Run: `terraform apply`.
+`terraform apply` - This will build the terraform resources.
 
-9. Configure kubectl credential, Run: `make kubectl-get-creds`.
+`cd ..`
 
-10. Verify if the cluster works, Run: `kubectl cluster-info`.
+**8. Configure kubectl credential** 
 
-If kubectl can connect to the cluster you can now start deploying apps to your GKE Cluster.
+```
+make kubectl-get-creds
+```
 
-If the cluster is working you should be able to see a result similar to the ff:
+**9. Verify if the cluster works**
+
+```
+kubectl cluster-info
+```
+
+If the cluster is working, `kubectl` can connect to the cluster and should show a result similar to the ff:
+
 ```
 Kubernetes master is running at https://35.185.180.68
 GLBCDefaultBackend is running at https://35.185.180.68/api/v1/namespaces/kube-system/services/default-http-backend/proxy
@@ -84,15 +114,26 @@ KubeDNS is running at https://35.185.180.68/api/v1/namespaces/kube-system/servic
 kubernetes-dashboard is running at https://35.185.180.68/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy
 ```
 
-11. Clean Up.
+**10. You can now start deploying apps to your GKE Cluster.**
 
-To Destroy Terraform-managed infrastructure Run: `terraform destroy --force`
+To deploy basic apps you can follow the [Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/) tutorial.
+
+If you want to try out [Istio](https://istio.io/) you can follow my Istio quick demo guide here https://github.com/ctaguinod/istio-demo
+
+
+**11. Cleaning Up.**
+
+`cd terraform/`
+
+`terraform state list` - This will list all terraform managed resources. 
+
+`terraform destroy ` - **This will destroy all Terraform-managed resource, be carefull when running this command.** If you encounter some errors try to verify if there are still resources left by re running `terraform state list` and run `terraform destroy` again.
 
 `cd ..`
 
-To Delete service account and credential Run: `make delete-service-account`
+`make delete-service-account` - This will delete the service account and the service account credential.
 
-To Delete Terraform Run: `make delete-tf`
+`make delete-tf` - This will delete terraform.
 
-To Delete Project Run: `make delete-project`
+`make delete-project` - This will delete the project.
 
