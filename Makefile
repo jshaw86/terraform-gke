@@ -54,7 +54,7 @@ help:
 	@echo 8. Verify if the cluster works, Run: kubectl cluster-info 
 	@echo If kubectl can connect to the cluster you can now start deploying apps to your GKE Cluster. 
 	@echo 
-	@echo 9. To Destroy Terraform-managed infrastructure Run: terraform destroy --force
+	@echo 9. To Destroy Terraform-managed infrastructure Run: terraform destroy
 
 .PHONY: create-project
 create-project:

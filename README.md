@@ -95,9 +95,9 @@ If you want to try out [Istio](https://istio.io/) you can follow my Istio quick 
 
 `cd terraform/`
 
-To Destroy Terraform-managed infrastructure Run: `terraform destroy --force`
+To Destroy Terraform-managed infrastructure Run: `terraform destroy `
 
-To Verify if all resources were deleted Runn: `terraform state list`. There shouldnt be any resources left, you can run `terraform destroy --force` again to force delete remaining resources.
+To Verify if all resources were deleted Runn: `terraform state list`. There shouldnt be any resources left, you can run `terraform destroy` again to force delete remaining resources.
 
 `cd ..`
 
