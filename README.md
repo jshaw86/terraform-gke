@@ -69,6 +69,8 @@ To Generate execution plan for Terraform Run: `terraform plan`.
 
 To Build / Execute the Terraform plan Run: `terraform apply`.
 
+`cd ..`
+
 9. Configure kubectl credential, Run: `make kubectl-get-creds`.
 
 10. Verify if the cluster works, Run: `kubectl cluster-info`.
@@ -91,7 +93,11 @@ If you want to try out [Istio](https://istio.io/) you can follow my Istio quick 
 
 12. Clean Up.
 
+`cd terraform/`
+
 To Destroy Terraform-managed infrastructure Run: `terraform destroy --force`
+
+To Verify if all resources were deleted Runn: `terraform state list`. There shouldnt be any resources left, you can run `terraform destroy --force` again to force delete remaining resources.
 
 `cd ..`
 
