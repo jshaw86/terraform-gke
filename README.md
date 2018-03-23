@@ -37,7 +37,6 @@ TF_INSTALLER=https://releases.hashicorp.com/terraform/0.11.5/terraform_0.11.5_li
 
 ```
 make create-project
-
 ```
 
 This step creates a project named `${TF_PROJECT_ID}` and associates to billing account `GCP_BILLING_ACCOUNT`
@@ -57,7 +56,7 @@ This step creates a service account $(TF_ADMIN_USER) and adds a project iam poli
 make install-tf 
 ```
 
-This step downloads the terraform binary in ./bin and /usr/local/bin/
+This step downloads the terraform binary in bin/ and /usr/local/bin/
 
 **6. Modify the variables in the file `terraform/terraform.tfvars`**
 
@@ -132,7 +131,7 @@ If you want to try out [Istio](https://istio.io/) you can follow my Istio quick 
 
 `cd ..`
 
-`make delete-service-account` - This will delete the service account and the credential.
+`make delete-service-account` - This will delete the service account and the service account credential.
 
 `make delete-tf` - This will delete terraform.
 
